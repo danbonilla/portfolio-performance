@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
+    'reports'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -77,8 +78,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+def fromRelativePath(*paths):
+    base = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+    return os.path.abspath(os.path.join(base, *paths))
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = fromRelativePath('../staticfiles/static/')
