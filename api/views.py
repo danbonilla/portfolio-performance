@@ -1,12 +1,6 @@
 from rest_framework import generics
-<<<<<<< HEAD
-from api.models import Portfolio, PortfolioHistory, BenchmarkHistory
-from .serializers import PortfolioHistorySerializer
-from .serializers import BenchmarkHistorySerializer
-=======
 from api.models import Portfolios, PortfolioHistory, BenchmarkHistory
-from .serializers import PortfolioHistorySerializer, PortfoliosSerializer
->>>>>>> fe389936edc0343bb674d8542754b495e0ba8ad3
+from .serializers import PortfolioHistorySerializer, PortfoliosSerializer, BenchmarkHistorySerializer
 
 
 class PortfolioView(generics.ListAPIView):
