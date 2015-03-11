@@ -53,8 +53,15 @@ class CumulativeReturnsView(generics.ListAPIView):
         fromdate = self.request.QUERY_PARAMS.get('fromdate', None)
         todate = self.request.QUERY_PARAMS.get('todate', None)
 
-        query_set = Client.objects.raw('')
-        print query_set
-        data = [{'portfolio':123, 'benchmark': 456}]
+        fromgrowth = PortfolioHistory.objects.values_list('growth').get(portfolio_id=portfolio_id, date=fromdate)
+        torowth = PortfolioHistory.objects.values_list('growth').get(portfolio_id=portfolio_id, date=todate)
+        
+        frombm = BenchmarkHistory.objects.values_list('growth').get(date=fromdate)
+        tobm = BenchmarkHistory.objects.values_list('growth').get(date=todate)
+
+        pTWRR = (1+torowth[0]/1+fromgrowth[0])-1
+        bTWRR = (tobm[0]/frombm[0])-1
+
+        data = [{'portfolio':pTWRR, 'benchmark': bTWRR}]
         return data
 
