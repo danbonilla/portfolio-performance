@@ -9,14 +9,16 @@
 
         <link rel="stylesheet" href="{{STATIC_URL}}css/normalize.css">
         <link rel="stylesheet" href="{{STATIC_URL}}css/main.css">
+        <link rel="stylesheet" href="{{STATIC_URL}}css/nvd3.css">
     </head>
     <body>
 	    <nav>Nav Here</nav>
 	    <section>
         	<h1>Portfolio Performance</h1>
-        	<form>
-
-        	</form>
+            <div class="report-form">
+        	   <div id="portfolio-select"></div>
+               <button id="report-submit">Submit</button>
+            </div>
         	<h3>Chart Here</h3>
         	<div id="chart" class="chart-container">
                 <svg style="width:500px; height:500px"></svg>
@@ -24,6 +26,7 @@
         </section>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.2/underscore-min.js"></script>
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="{{STATIC_URL}}js/vendor/nvd3.js"></script>
         <script src="{{STATIC_URL}}js/app.js"></script>
