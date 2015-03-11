@@ -2,6 +2,23 @@
 
 	$(document).ready(function() {
 
+    var portfoliosUrl = "/api/portfolios";
+
+    var portfoliosPromise = $.ajax({
+          type: "GET",
+          url: portfoliosUrl,
+          dataType: 'json', 
+          contentType: 'application/json; charset=UTF-8'
+      });
+
+    portfoliosPromise.done(function(data) {
+      console.log(data);
+    });
+
+
+
+
+
     nv.addGraph(function() {
       var chart = nv.models.lineWithFocusChart();
 
