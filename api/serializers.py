@@ -16,3 +16,7 @@ class BenchmarkHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = BenchmarkHistory
         fields = ('date', 'growth')
+
+class CumulativeReturnsSerializer(serializers.Serializer):
+    portfolio = serializers.FloatField()
+    benchmark = serializers.FloatField()
