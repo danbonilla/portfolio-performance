@@ -35,7 +35,7 @@ function stream_index(d, i) {
 }
 
 	$(document).ready(function() {
-
+    var portfolioSelectContainer = $("#portfolio-select");
     var portfoliosUrl = "/api/portfolios";
 
     var portfoliosPromise = $.ajax({
@@ -46,10 +46,21 @@ function stream_index(d, i) {
       });
 
     portfoliosPromise.done(function(data) {
-      console.log(data);
+      _.each(data, function(portfolio) {
+        var checkbox = $('<input type="checkbox" value="' + portfolio.id + '"/><label> ' + portfolio.name + '</label></br>');
+        portfolioSelectContainer.append(checkbox);
+      });
     });
 
-
+    $('#report-submit').on("click", function() {
+      var portfolios = [];
+      var checkboxes = $('#portfolio-select input[type="checkbox"]');
+      _.each(checkboxes, function(checkbox) {
+        if (checkbox.checked) {
+          portfolios.push(checkbox.value);
+        }
+      });
+    });
 
 
 
