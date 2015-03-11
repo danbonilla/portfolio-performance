@@ -42,7 +42,7 @@ class BenchmarkHistoryView(generics.ListAPIView):
           query_set = BenchmarkHistory.objects.filter(date__lte=todate).order_by('-date')
 
         else:
-          query_set = BenchmarkHistory.objects.order_by('-date')      	
+          query_set = BenchmarkHistory.objects.all().order_by('-date')      	
           
         return query_set
 
