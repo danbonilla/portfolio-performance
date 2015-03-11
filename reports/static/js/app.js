@@ -99,10 +99,14 @@ function stream_index(d, i) {
       function mapPerformanceDataToSeries(isBenchmark, seriesData) {
         var chartData = [];
         var lastData = null;
+        var benchmarkSum = 0;
         _.each(seriesData, function(data) {
           var value;
           if (isBenchmark) {
-            value = lastData !== null ? (data.growth/lastData.growth) - 1 : 0;
+            var change = lastData !== null ? (data.growth/lastData.growth) - 1 : 0;
+            console.log(change);
+            benchmarkSum += change * 100;
+            value = benchmarkSum;
           }
           else {
             value = data.growth;
@@ -119,8 +123,11 @@ function stream_index(d, i) {
       nv.addGraph(function() {
         var chart = nv.models.lineWithFocusChart();
 
-        chart.xAxis
-            .tickFormat(d3.format(',f'));
+        chart.xAxis.tickFormat(function(d) {
+          var date = new Date(0);
+          date.setUTCSeconds(d);
+          return d3.time.format('%b %y')(new Date(date))
+        });
 
         chart.yAxis
             .tickFormat(d3.format(',.2f'));
