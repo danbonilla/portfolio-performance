@@ -47,44 +47,98 @@ function stream_index(d, i) {
 
     portfoliosPromise.done(function(data) {
       _.each(data, function(portfolio) {
-        var checkbox = $('<input type="checkbox" value="' + portfolio.id + '"/><label> ' + portfolio.name + '</label></br>');
+        var checkbox = $('<input type="checkbox" value="' + portfolio.id + '" name="' + portfolio.name +'"/><label> ' + portfolio.name + '</label></br>');
         portfolioSelectContainer.append(checkbox);
       });
     });
 
     $('#report-submit').on("click", function() {
       var portfolios = [];
+      var portfolioPromises = [];
+      var portfolioSeries = [];
+
       var checkboxes = $('#portfolio-select input[type="checkbox"]');
       _.each(checkboxes, function(checkbox) {
         if (checkbox.checked) {
-          portfolios.push(checkbox.value);
+          portfolios.push({ name: $(checkbox).attr("name"), value: checkbox.value});
         }
       });
+
+      var benchmarkPromise = $.ajax({
+          type: "GET",
+          url: "/api/benchmark",
+          dataType: 'json', 
+          contentType: 'application/json; charset=UTF-8'
+        });
+
+      portfolioPromises.push(benchmarkPromise);
+
+      _.each(portfolios, function(portfolio) {
+        var performancePromise = $.ajax({
+          type: "GET",
+          url: "/api/portfolio/" + portfolio.value,
+          dataType: 'json', 
+          contentType: 'application/json; charset=UTF-8'
+        });
+        portfolioPromises.push(performancePromise);
+      })
+
+      $.when.apply($, portfolioPromises).then(function() {
+        var seriesData = [];
+        var key, chartData;
+        var results = arguments;
+        for (var i = 0; i < results.length; i++) {
+          chartData = mapPerformanceDataToSeries(i === 0, results[i][0]);
+          key = i === 0 ? "benchmark" : portfolios[i-1].name;
+          seriesData.push({ key: key, values: chartData });
+        }
+        console.log(seriesData);
+        chartOurData(seriesData);
+      });
+
+      function mapPerformanceDataToSeries(isBenchmark, seriesData) {
+        var chartData = [];
+        var lastData = null;
+        _.each(seriesData, function(data) {
+          var value;
+          if (isBenchmark) {
+            value = lastData !== null ? (data.growth/lastData.growth) - 1 : 0;
+          }
+          else {
+            value = data.growth;
+          }
+          chartData.push({ x: new Date(data.date).getTime() / 1000, y: value });
+          lastData = data;
+        });
+        return chartData;
+      }
     });
 
 
+    function chartOurData(series) {
+      nv.addGraph(function() {
+        var chart = nv.models.lineWithFocusChart();
 
-    nv.addGraph(function() {
-      var chart = nv.models.lineWithFocusChart();
+        chart.xAxis
+            .tickFormat(d3.format(',f'));
 
-      chart.xAxis
-          .tickFormat(d3.format(',f'));
+        chart.yAxis
+            .tickFormat(d3.format(',.2f'));
 
-      chart.yAxis
-          .tickFormat(d3.format(',.2f'));
+        chart.y2Axis
+            .tickFormat(d3.format(',.2f'));
 
-      chart.y2Axis
-          .tickFormat(d3.format(',.2f'));
+        d3.select('#chart svg')
+            .datum(series)
+            .transition().duration(500)
+            .call(chart);
 
-      d3.select('#chart svg')
-          .datum(testData())
-          .transition().duration(500)
-          .call(chart);
+        nv.utils.windowResize(chart.update);
 
-      nv.utils.windowResize(chart.update);
+        return chart;
+      });
 
-      return chart;
-    });
+    }
     /**************************************
      * Simple test data generator
      */
