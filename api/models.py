@@ -1,13 +1,13 @@
 from django.db import models
 
-class Portfolio(models.Model):
+class Portfolios(models.Model):
 	name = models.CharField(max_length=1024)
 
 	def __unicode__(self):
 		return unicode(self.name)
 
 class PortfolioHistory(models.Model):
-    portfolio_id = models.ForeignKey(Portfolio)
+    portfolio_id = models.ForeignKey(Portfolios)
     date = models.DateField(blank=True)
     growth = models.FloatField(default=0)
 
@@ -19,4 +19,4 @@ class BenchmarkHistory(models.Model):
 	growth = models.FloatField(default=0)
 
 	def __unicode__(self):
-		return unicode(self.month)
+		return unicode(self.date)
