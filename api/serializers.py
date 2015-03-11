@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from api.models import Portfolio, PortfolioHistory, BenchmarkHistory
+from api.models import Portfolios, PortfolioHistory, BenchmarkHistory
 
-class PortfolioSerializer(serializers.ModelSerializer):
+class PortfoliosSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Portfolio
-        fields = ('name')
+        model = Portfolios
+        fields = ('id', 'name')
 
 class PortfolioHistorySerializer(serializers.ModelSerializer):
 
