@@ -11,5 +11,5 @@
 
 ## Migrate db
 1. python manage.py makemigrations (app name)
-2. sreddypython manage.py sqlmigrate (app name) (migration number)
+2. python manage.py sqlmigrate (app name) (migration number)
 3. python manage.py migrate
