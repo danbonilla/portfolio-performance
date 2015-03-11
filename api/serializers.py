@@ -10,9 +10,9 @@ class PortfolioHistorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PortfolioHistory
-        fields = ('month', 'growth')
+        fields = ('date', 'growth')
 
 class BenchmarkHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = BenchmarkHistory
-        fields = ('month', 'growth')
+        fields = ('date', 'growth')
