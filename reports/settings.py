@@ -36,8 +36,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'reports',
     'api',
-    'reports'
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -88,3 +89,10 @@ def fromRelativePath(*paths):
 
 STATIC_URL = '/static/'
 STATIC_ROOT = fromRelativePath('../staticfiles/static/')
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny'
+    ]
+}
+
