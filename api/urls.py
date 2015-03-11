@@ -1,12 +1,13 @@
 from django.conf.urls import patterns, url, include
 from rest_framework import routers
-from .views import PortfolioView, PortfolioListView
+from .views import PortfolioView, PortfolioListView, BenchmarkHistoryView
 
 
 router = routers.DefaultRouter()
 
 urlpatterns = patterns('',
-	url(r'^api/portfolios$', PortfolioListView.as_view()),
-    url(r'^api/portfolio/(?P<id>\w+)/?$', PortfolioView.as_view()),
-    url(r'^$', include(router.urls)),
+  url(r'^api/portfolios$', PortfolioListView.as_view()),
+  url(r'^api/portfolio/(?P<id>\w+)/?$', PortfolioView.as_view()),
+  url(r'^api/benchmark$', BenchmarkHistoryView.as_view()),
+  url(r'^$', include(router.urls)),
 )

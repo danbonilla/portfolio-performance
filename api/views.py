@@ -33,7 +33,17 @@ class BenchmarkHistoryView(generics.ListAPIView):
         todate = self.request.QUERY_PARAMS.get('todate', None)
         if fromdate and todate: 
 
-          query_set = BenchmarkHistory.objects.filter(portfolio_id=portfolio_id).filter(date__range=[fromdate, todate]).order_by('-date')    	
+          query_set = BenchmarkHistory.objects.filter(date__range=[fromdate, todate]).order_by('-date')  
+
+        elif fromdate: 
+          query_set = BenchmarkHistory.objects.filter(date__gte=fromdate).order_by('-date')
+
+        elif todate:
+          query_set = BenchmarkHistory.objects.filter(date__lte=todate).order_by('-date')
+
+        else:
+          query_set = BenchmarkHistory.objects.order_by('-date')      	
+          
         return query_set
 
 class PortfolioListView(generics.ListAPIView):
