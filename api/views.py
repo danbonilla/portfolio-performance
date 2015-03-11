@@ -8,7 +8,8 @@ class PortfolioView(generics.ListAPIView):
 
     def get_queryset(self):
         portfolio_id = self.kwargs['id']
-        # logged_in_user = self.request.QUERY_PARAMS.get('logged_in_user', None)
+        fromdate = self.request.QUERY_PARAMS.get('fromdate', None)
+        todate = self.request.QUERY_PARAMS.get('todate', None)
 
-    	query_set = PortfolioHistory.objects.filter(portfolio_id=portfolio_id).order_by('-month')  	
+    	query_set = PortfolioHistory.objects.filter(portfolio_id=portfolio_id).filter(date__range=[fromdate, todate]).order_by('-date')  	
         return query_set

@@ -8,15 +8,15 @@ class Portfolio(models.Model):
 
 class PortfolioHistory(models.Model):
     portfolio_id = models.ForeignKey(Portfolio)
-    month = models.DateField(blank=True)
-    growth = models.IntegerField(default=0)
+    date = models.DateField(blank=True)
+    growth = models.FloatField(default=0)
 
     def __unicode__(self):
     	return unicode(self.portfolio_id)
 
 class BenchmarkHistory(models.Model):
-	month = models.DateField(blank=True)
-	growth = models.IntegerField(default=0)
+	date = models.DateField(blank=True)
+	growth = models.FloatField(default=0)
 
 	def __unicode__(self):
 		return unicode(self.month)
