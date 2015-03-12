@@ -10,29 +10,26 @@
         <link rel="stylesheet" href="{{STATIC_URL}}css/normalize.css">
         <link rel="stylesheet" href="{{STATIC_URL}}css/main.css">
         <link rel="stylesheet" href="{{STATIC_URL}}css/nvd3.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
     </head>
     <body>
-	    <nav>Nav Here</nav>
+	    <nav>
+            <ul>
+                <li id="left"><img src="http://awesomedc.files.wordpress.com/2010/05/motley-fool-logo.gif"  width="80" height="80"></li>
+                <li id="right"><h1>Portfolio Performance</h1></li>
+            </ul>
+        </nav>
 	    <section>
-        	<h1>Portfolio Performance</h1>
             <div class="report-form">
         	   <div id="portfolio-select"></div>
-               From Date: <input type="text" name="fromdate" id="fromdate">ex. yyyy-mm-dd<br/>
-               To Date: <input type="text" name="todate" id="todate">ex. yyyy-mm-dd<br/>
-               <button id="report-submit">Submit</button>
+               <div class="date-selects">
+                   <label for="fromdate">From Date:</label><input type="text" name="fromdate" id="fromdate" placeholder="yyyy-mm-dd"><br/>
+                   <label for="todate">To Date:</label><input type="text" name="todate" id="todate" placeholder="yyyy-mm-dd"><br/>
+                </div>
+               <button id="report-submit">Chart Performance <i class="fa fa-line-chart"></i></button>
             </div>
         	<div id="chart" class="chart-container">
-                <svg style="width:860px; height:500px"></svg>
-            </div>
-            <div>
-                <table>
-                    <tr>
-                        <th>Metric</th><th>Portfolio</th><th>BM</th><th>Diff</th>
-                    </tr>
-                    <tr>
-                        <td>Cumulative TWRR</td><td></td><td></td><td></td>
-                    </tr>
-                </table>
+                <svg style="width:80%; height:600px"></svg>
             </div>
         </section>
 
