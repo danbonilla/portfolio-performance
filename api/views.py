@@ -59,8 +59,10 @@ class CumulativeReturnsView(generics.ListAPIView):
         frombm = BenchmarkHistory.objects.values_list('growth').get(date=fromdate)
         tobm = BenchmarkHistory.objects.values_list('growth').get(date=todate)
 
-        pTWRR = (1+torowth[0]/1+fromgrowth[0])-1
-        bTWRR = (tobm[0]/frombm[0])-1
+        fgvalue = 1+(fromgrowth[0]/100)
+        tgvalue = 1+(torowth[0]/100)
+        pTWRR = ((tgvalue/fgvalue)-1)*100
+        bTWRR = ((tobm[0]/frombm[0])-1)*100
 
         data = [{'portfolio':pTWRR, 'benchmark': bTWRR}]
         return data

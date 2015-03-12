@@ -66,7 +66,7 @@ function stream_index(d, i) {
 
       var benchmarkPromise = $.ajax({
           type: "GET",
-          url: "/api/benchmark",
+          url: "/api/benchmark?fromdate=" + $('#fromdate').val() + "&todate=" + $('#todate').val(),
           dataType: 'json', 
           contentType: 'application/json; charset=UTF-8'
         });
@@ -76,7 +76,7 @@ function stream_index(d, i) {
       _.each(portfolios, function(portfolio) {
         var performancePromise = $.ajax({
           type: "GET",
-          url: "/api/portfolio/" + portfolio.value,
+          url: "/api/portfolio/" + portfolio.value +"?fromdate=" + $('#fromdate').val() + "&todate=" + $('#todate').val(),
           dataType: 'json', 
           contentType: 'application/json; charset=UTF-8'
         });
@@ -146,6 +146,7 @@ function stream_index(d, i) {
       });
 
     }
+
     /**************************************
      * Simple test data generator
      */
