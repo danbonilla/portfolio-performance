@@ -71,3 +71,12 @@ li.right{
 	padding:10px;
 	margin:auto;
 }
+
+#cumulative-returns {
+	margin:30px;
+}
+
+#cumulative-returns td {
+	background-color:#eee;
+	padding:10px;
+}

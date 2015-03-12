@@ -106,8 +106,10 @@ var performanceChart = function(options) {
     $.when.apply($, portfolioPromises).then(function() {
       var returnsData = [];
       var results = arguments;
-      for (var i = 0; i < results.length - 2; i++) {
-        var data = results[i][0];
+      var onlyHaveOneRealResult = (typeof results[1]) === "string";
+      var resultsLength = onlyHaveOneRealResult ? results.length - 2 : results.length;
+      for (var i = 0; i < resultsLength; i++) {
+        var data = onlyHaveOneRealResult ? results[i][0] : results[i][0][0];
         data.name = portfolios[i].name;
         returnsData.push(data);
       }

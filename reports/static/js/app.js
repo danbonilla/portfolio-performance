@@ -2,12 +2,15 @@
 
 	$(document).ready(function() {
     var portfolioSelectContainer = $("#portfolio-select");
+    var returnsContainer = $("#cumulative-returns");
     var portfoliosUrl = "/api/portfolios";
     var chart = performanceChart({ 
         svg: '#chart svg',
         startDate: '#fromdate',
         endDate: '#todate'
     });
+
+    returnsContainer.hide();
 
     var portfoliosPromise = $.ajax({
         type: "GET",
@@ -33,9 +36,25 @@
       });
 
       returnsDataPromise.done(function(returnsData) {
-        console.log(returnsData);
+        displayReturnsData(returnsData);
       });
     });
+
+    function displayReturnsData(data) {
+      if (data.length) {
+        returnsContainer.show();
+      }
+      else {
+        returnsContainer.hide();
+      }
+      var tbody = returnsContainer.find("tbody");
+      tbody.html('');
+      _.each(data, function(returns) {
+        var row = $('<tr><td>' + returns.name + '</td><td>' + returns.portfolio.toFixed(2) + '</td></tr>');
+        returnsContainer.append(row);
+      });
+
+    }
 
   });
 })(jQuery);
