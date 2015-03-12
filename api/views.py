@@ -51,18 +51,19 @@ class CumulativeReturnsView(generics.ListAPIView):
     def get_queryset(self):
         portfolio_id = self.kwargs['id']
         fromdate = self.request.QUERY_PARAMS.get('fromdate', None)
-        fromdate = fromdate[0:7]
         todate = self.request.QUERY_PARAMS.get('todate', None)
-        todate = todate[0:7]
 
-        if fromdate and todate: 
+        if fromdate and todate:
+            fromdate = fromdate[0:7]
+            todate = todate[0:7]
             fromgrowth = PortfolioHistory.objects.values_list('growth').get(portfolio_id=portfolio_id, date__contains=fromdate)
             torowth = PortfolioHistory.objects.values_list('growth').get(portfolio_id=portfolio_id, date__contains=todate)
 
             frombm = BenchmarkHistory.objects.values_list('growth').get(date__contains=fromdate)
             tobm = BenchmarkHistory.objects.values_list('growth').get(date__contains=todate)
-            
+
         elif fromdate: 
+            fromdate = fromdate[0:7]
             fromgrowth = PortfolioHistory.objects.values_list('growth').get(portfolio_id=portfolio_id, date__contains=fromdate)
             torowth = PortfolioHistory.objects.values_list('growth').filter(portfolio_id=portfolio_id).order_by('-date')[0]
 
@@ -70,6 +71,7 @@ class CumulativeReturnsView(generics.ListAPIView):
             tobm = BenchmarkHistory.objects.values_list('growth').order_by('-date')[0]
 
         elif todate:
+            todate = todate[0:7]
             fromgrowth = PortfolioHistory.objects.values_list('growth').filter(portfolio_id=portfolio_id).order_by('date')[0]
             torowth = PortfolioHistory.objects.values_list('growth').get(portfolio_id=portfolio_id, date__contains=todate)
 
