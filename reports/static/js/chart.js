@@ -66,6 +66,57 @@ var performanceChart = function(options) {
     return seriesDeferred.promise();
   }
 
+  function loadCumulativeReturnsForCheckedPortfolios(checkboxes) {
+    var portfolios = [];
+    var portfolioPromises = [];
+    var returnsDeferred = jQuery.Deferred();
+    var queryString = "";
+
+    if (!startDateInput.val() || !endDateInput.val()) {
+      returnsDeferred.reject();
+      return returnsDeferred.promise();
+    }
+
+    if (startDateInput.val()) {
+      queryString += queryString ? "&" : "?";
+      queryString += "fromdate=" + startDateInput.val();
+    }
+
+    if (endDateInput.val()) {
+      queryString += queryString ? "&" : "?";
+      queryString += "todate=" + endDateInput.val();
+    }
+
+    _.each(checkboxes, function(checkbox) {
+      if (checkbox.checked) {
+        portfolios.push({ name: $(checkbox).attr("name"), value: checkbox.value});
+      }
+    });
+
+    _.each(portfolios, function(portfolio) {
+      var performancePromise = $.ajax({
+        type: "GET",
+        url: "/api/cumreturns/" + portfolio.value + queryString,
+        dataType: 'json', 
+        contentType: 'application/json; charset=UTF-8'
+      });
+      portfolioPromises.push(performancePromise);
+    })
+
+    $.when.apply($, portfolioPromises).then(function() {
+      var returnsData = [];
+      var results = arguments;
+      for (var i = 0; i < results.length - 2; i++) {
+        var data = results[i][0];
+        data.name = portfolios[i].name;
+        returnsData.push(data);
+      }
+      return returnsDeferred.resolve(returnsData);
+    });
+
+    return returnsDeferred.promise();
+  }
+
   function mapPerformanceDataToSeries(isBenchmark, seriesData) {
     var chartData = [];
     var lastData = null;
@@ -121,6 +172,7 @@ var performanceChart = function(options) {
 
   return {
 		showData: showSeriesData,
-    loadData: loadDataForCheckedPortfolios
+    loadData: loadDataForCheckedPortfolios,
+    loadReturns: loadCumulativeReturnsForCheckedPortfolios
 	};
 };

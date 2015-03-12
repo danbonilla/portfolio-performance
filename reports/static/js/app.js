@@ -26,9 +26,14 @@
     $('#report-submit').on("click", function() {
       var checkboxes = $('#portfolio-select input[type="checkbox"]');
       var seriesDataPromise = chart.loadData(checkboxes);
+      var returnsDataPromise = chart.loadReturns(checkboxes);
 
       seriesDataPromise.done(function(seriesData) {
         chart.showData(seriesData);
+      });
+
+      returnsDataPromise.done(function(returnsData) {
+        console.log(returnsData);
       });
     });
 
