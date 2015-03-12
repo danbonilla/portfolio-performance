@@ -1,13 +1,29 @@
 var performanceChart = function(options) {
 	var settings = $.extend({
         svg: "#chart svg",
+        startDate: null,
+        endDate: null
     }, options);
+
+  var startDateInput = $(settings.startDate);
+  var endDateInput = $(settings.endDate);
 
   function loadDataForCheckedPortfolios(checkboxes) {
     var portfolios = [];
     var portfolioPromises = [];
     var portfolioSeries = [];
     var seriesDeferred = jQuery.Deferred();
+    var queryString = "";
+
+    if (startDateInput.val()) {
+      queryString += queryString ? "&" : "?";
+      queryString += "fromdate=" + startDateInput.val();
+    }
+
+    if (endDateInput.val()) {
+      queryString += queryString ? "&" : "?";
+      queryString += "todate=" + endDateInput.val();
+    }
 
     _.each(checkboxes, function(checkbox) {
       if (checkbox.checked) {
@@ -17,7 +33,7 @@ var performanceChart = function(options) {
 
     var benchmarkPromise = $.ajax({
         type: "GET",
-        url: "/api/benchmark",
+        url: "/api/benchmark" + queryString,
         dataType: 'json', 
         contentType: 'application/json; charset=UTF-8'
       });
@@ -27,7 +43,7 @@ var performanceChart = function(options) {
     _.each(portfolios, function(portfolio) {
       var performancePromise = $.ajax({
         type: "GET",
-        url: "/api/portfolio/" + portfolio.value,
+        url: "/api/portfolio/" + portfolio.value + queryString,
         dataType: 'json', 
         contentType: 'application/json; charset=UTF-8'
       });

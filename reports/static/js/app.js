@@ -3,14 +3,18 @@
 	$(document).ready(function() {
     var portfolioSelectContainer = $("#portfolio-select");
     var portfoliosUrl = "/api/portfolios";
-    var chart = performanceChart({ svg: '#chart svg' });
+    var chart = performanceChart({ 
+        svg: '#chart svg',
+        startDate: '#fromdate',
+        endDate: '#todate'
+    });
 
     var portfoliosPromise = $.ajax({
-          type: "GET",
-          url: portfoliosUrl,
-          dataType: 'json', 
-          contentType: 'application/json; charset=UTF-8'
-      });
+        type: "GET",
+        url: portfoliosUrl,
+        dataType: 'json', 
+        contentType: 'application/json; charset=UTF-8'
+    });
 
     portfoliosPromise.done(function(data) {
       _.each(data, function(portfolio) {
@@ -27,6 +31,6 @@
         chart.showData(seriesData);
       });
     });
-    
+
   });
 })(jQuery);
