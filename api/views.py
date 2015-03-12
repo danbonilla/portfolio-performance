@@ -51,13 +51,37 @@ class CumulativeReturnsView(generics.ListAPIView):
     def get_queryset(self):
         portfolio_id = self.kwargs['id']
         fromdate = self.request.QUERY_PARAMS.get('fromdate', None)
+        fromdate = fromdate[0:7]
         todate = self.request.QUERY_PARAMS.get('todate', None)
+        todate = todate[0:7]
 
-        fromgrowth = PortfolioHistory.objects.values_list('growth').get(portfolio_id=portfolio_id, date=fromdate)
-        torowth = PortfolioHistory.objects.values_list('growth').get(portfolio_id=portfolio_id, date=todate)
-        
-        frombm = BenchmarkHistory.objects.values_list('growth').get(date=fromdate)
-        tobm = BenchmarkHistory.objects.values_list('growth').get(date=todate)
+        if fromdate and todate: 
+            fromgrowth = PortfolioHistory.objects.values_list('growth').get(portfolio_id=portfolio_id, date__contains=fromdate)
+            torowth = PortfolioHistory.objects.values_list('growth').get(portfolio_id=portfolio_id, date__contains=todate)
+
+            frombm = BenchmarkHistory.objects.values_list('growth').get(date__contains=fromdate)
+            tobm = BenchmarkHistory.objects.values_list('growth').get(date__contains=todate)
+            
+        elif fromdate: 
+            fromgrowth = PortfolioHistory.objects.values_list('growth').get(portfolio_id=portfolio_id, date__contains=fromdate)
+            torowth = PortfolioHistory.objects.values_list('growth').filter(portfolio_id=portfolio_id).order_by('-date')[0]
+
+            frombm = BenchmarkHistory.objects.values_list('growth').get(date__contains=fromdate)
+            tobm = BenchmarkHistory.objects.values_list('growth').order_by('-date')[0]
+
+        elif todate:
+            fromgrowth = PortfolioHistory.objects.values_list('growth').filter(portfolio_id=portfolio_id).order_by('date')[0]
+            torowth = PortfolioHistory.objects.values_list('growth').get(portfolio_id=portfolio_id, date__contains=todate)
+
+            frombm = BenchmarkHistory.objects.values_list('growth').order_by('date')[0]
+            tobm = BenchmarkHistory.objects.values_list('growth').get(date__contains=todate)
+
+        else:
+            fromgrowth = PortfolioHistory.objects.values_list('growth').filter(portfolio_id=portfolio_id).order_by('date')[0]
+            torowth = PortfolioHistory.objects.values_list('growth').filter(portfolio_id=portfolio_id).order_by('-date')[0]
+            
+            frombm = BenchmarkHistory.objects.values_list('growth').order_by('date')[0]
+            tobm = BenchmarkHistory.objects.values_list('growth').order_by('-date')[0]
 
         fgvalue = 1+(fromgrowth[0]/100)
         tgvalue = 1+(torowth[0]/100)
