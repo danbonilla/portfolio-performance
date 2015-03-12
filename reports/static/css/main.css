@@ -78,5 +78,6 @@ li.right{
 
 #cumulative-returns td {
 	background-color:#eee;
+	border: 1px solid #fff;
 	padding:10px;
 }

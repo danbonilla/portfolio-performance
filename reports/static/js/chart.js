@@ -72,10 +72,10 @@ var performanceChart = function(options) {
     var returnsDeferred = jQuery.Deferred();
     var queryString = "";
 
-    if (!startDateInput.val() || !endDateInput.val()) {
-      returnsDeferred.reject();
-      return returnsDeferred.promise();
-    }
+    // if (!startDateInput.val() || !endDateInput.val()) {
+    //   returnsDeferred.reject();
+    //   return returnsDeferred.promise();
+    // }
 
     if (startDateInput.val()) {
       queryString += queryString ? "&" : "?";

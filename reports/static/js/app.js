@@ -41,14 +41,15 @@
     });
 
     function displayReturnsData(data) {
+      var tbody = returnsContainer.find("tbody");
       if (data.length) {
         returnsContainer.show();
+        tbody.html('<tr><td>Benchmark</td><td>' + data[0].benchmark.toFixed(2) + '</td></tr>');
       }
       else {
         returnsContainer.hide();
       }
-      var tbody = returnsContainer.find("tbody");
-      tbody.html('');
+      
       _.each(data, function(returns) {
         var row = $('<tr><td>' + returns.name + '</td><td>' + returns.portfolio.toFixed(2) + '</td></tr>');
         returnsContainer.append(row);
