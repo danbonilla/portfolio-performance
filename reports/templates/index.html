@@ -17,10 +17,22 @@
         	<h1>Portfolio Performance</h1>
             <div class="report-form">
         	   <div id="portfolio-select"></div>
+               From Date: <input type="text" name="fromdate" id="fromdate">ex. yyyy-mm-dd<br/>
+               To Date: <input type="text" name="todate" id="todate">ex. yyyy-mm-dd<br/>
                <button id="report-submit">Submit</button>
             </div>
         	<div id="chart" class="chart-container">
                 <svg style="width:860px; height:500px"></svg>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <th>Metric</th><th>Portfolio</th><th>BM</th><th>Diff</th>
+                    </tr>
+                    <tr>
+                        <td>Cumulative TWRR</td><td></td><td></td><td></td>
+                    </tr>
+                </table>
             </div>
         </section>
 

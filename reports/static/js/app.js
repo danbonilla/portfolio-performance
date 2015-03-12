@@ -22,10 +22,11 @@
     $('#report-submit').on("click", function() {
       var checkboxes = $('#portfolio-select input[type="checkbox"]');
       var seriesDataPromise = chart.loadData(checkboxes);
+
       seriesDataPromise.done(function(seriesData) {
         chart.showData(seriesData);
       });
     });
-
-	});
+    
+  });
 })(jQuery);
