@@ -11,6 +11,11 @@
         <link rel="stylesheet" href="{{STATIC_URL}}css/main.css">
         <link rel="stylesheet" href="{{STATIC_URL}}css/nvd3.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <!-- stylesheet below is for JQuery datepicker -->
+        <link href="{{STATIC_URL}}css/ui-lightness/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" />
+
+
     </head>
     <body>
 	    <nav>
@@ -25,6 +30,10 @@
                <div class="date-selects">
                    <label for="fromdate">From Date:</label><input type="text" name="fromdate" id="fromdate" placeholder="yyyy-mm-dd"><br/>
                    <label for="todate">To Date:</label><input type="text" name="todate" id="todate" placeholder="yyyy-mm-dd"><br/>
+
+                   <!-- Jquery Datpkr input code below -->
+                   <input id="datepicker" type="text" />
+
                 </div>
                <button id="report-submit">Chart Performance <i class="fa fa-line-chart"></i></button>
             </div>
@@ -39,5 +48,12 @@
         <script type="text/javascript" src="{{STATIC_URL}}js/vendor/nvd3.js"></script>
         <script src="{{STATIC_URL}}js/chart.js"></script>
         <script src="{{STATIC_URL}}js/app.js"></script>
+
+        <!-- script below is for JQuery datepicker -->
+
+        <script src="{{STATIC_URL}}js/vendor/jquery.191.js"></script>
+        <script src="{{STATIC_URL}}js/vendor/jquery-ui-1.9.2.custom.min.js"></script>
+     
+
     </body>
 </html>

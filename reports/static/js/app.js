@@ -31,6 +31,15 @@
         chart.showData(seriesData);
       });
     });
-
+   
+    // jQuery datepicker code 
+    $(function(){
+      $.datepicker.setDefaults(
+        $.extend($.datepicker.regional[''])
+      );
+      $('#datepicker').datepicker();
+    });
+ 
   });
+
 })(jQuery);
