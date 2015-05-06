@@ -2,7 +2,7 @@ Portfolio Performance Visaulizer
 =======
 
 ### Overview 
-**Portfolio Performance Visualizer** Is a tool to visualy display investment portfolio's performance over time through charts. This tool can compare multiple portfolio's performance through specified time periods, by pulling data from excel sheets though queries made by APIs that have been created using Python, Django, and SQL, then diplays them in charts created using NVD3. This tool will be used internally by Motley Fool employees.
+**Portfolio Performance Visualizer** Is a tool to visually display investment portfolio's performance over time through charts. This tool can compare multiple portfolio's performance through specified time periods, by pulling data from excel sheets though queries made by APIs that have been created using Python, Django, and SQL, then diplays them in charts created using NVD3. This tool will be used internally by Motley Fool employees.
 
 
 ### Background 
@@ -13,5 +13,6 @@ Daniel Bonilla of General Assembly. The project won the award of "Most Feature C
 * Python 2.7
 * Django 1.7.6
 * JavaScript 1.8.5
+* NVD3
 * PostgreSQL Database
 
