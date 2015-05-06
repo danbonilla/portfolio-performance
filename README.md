@@ -1,15 +1,17 @@
-# portfolio-performance
+Portfolio Performance Visaulizer
+=======
 
-##setup (i think this should work)
-1. git clone https://github.com/shwetareddy/portfolio-performance
-2. cd (folder name)
-3. virtualenv .venv
-4. source .venv/bin/activate
-5. pip install requitements.txt
-6. python manage.py runserver
+### Overview 
+**Portfolio Performance Visaulizer** Is a tool to visualy display investment portfolio's performance over time through charts. This tool can compare multiple portfolio's performance through specified time periods, by pulling data from excel sheets though queries made by APIs that have been created using Python, Django, and SQL, then diplays them in charts created using NVD3. This tool will be used internally by Motley Fool employees.
 
 
-## Migrate db
-1. python manage.py makemigrations (app name)
-2. python manage.py sqlmigrate (app name) (migration number)
-3. python manage.py migrate
+### Background 
+**Portfolio Performance Visaulizer** is a Python on Django project completed as part of a two day HACKATHON sponsored by General Assembly and The Motley Fool. The team was comprised of Swetha Reddy, and Chris Quinn of Motley Fool, and 
+Daniel Bonilla of General Assembly. The project won the award of "Most Feature Complete Project" in the HACKATHON.
+
+### Technologies Used
+* Python 2.7
+* Django 1.7.6
+* JavaScript 1.8.5
+* PostgreSQL Database
+
